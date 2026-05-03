@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>폭탄 버튼</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="starfield" id="starfield" aria-hidden="true"></div>
+
+  <main class="stage">
+    <h1 class="title">
+      <span class="target-wrap">
+        <button type="button" id="target-btn" class="target-btn" aria-haspopup="listbox" aria-expanded="false" aria-label="대상 선택">
+          <span id="target-label">학교</span>
+          <span class="target-caret" aria-hidden="true">▾</span>
+        </button>
+        <ul id="target-menu" class="target-menu" role="listbox" hidden></ul>
+      </span>를 터뜨리기
+    </h1>
+
+    <div class="counter" id="counter" aria-live="polite">100,000,000,000</div>
+
+    <button type="button" id="bomb-btn" class="bomb-btn" aria-label="폭탄 버튼"></button>
+
+    <p class="participants">
+      <span id="participant-count">1</span>명이 함께하는 중!
+    </p>
+  </main>
+
+  <script src="app.js"></script>
+
+</body>
+
+</html>
