@@ -72,6 +72,13 @@ html, body {
   display: inline-flex;
   align-items: center;
   gap: 0.25em;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+}
+.target-menu li {
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
 }
 .target-btn:hover {
   background: rgba(255, 100, 40, 0.22);
@@ -172,6 +179,11 @@ html, body {
   border: none;
   cursor: pointer;
   position: relative;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
   background:
     radial-gradient(circle at 30% 26%,
       rgba(255, 255, 240, 0.95) 0%,
