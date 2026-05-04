@@ -266,12 +266,6 @@ function triggerBigBang() {
   setTimeout(() => flash.remove(), 1200);
 
   setTimeout(() => spawnUniverse(), 1300);
-  setTimeout(() => {
-    const msg = document.createElement("div");
-    msg.className = "bigbang-msg";
-    msg.textContent = "우주가 시작됐다.";
-    document.body.appendChild(msg);
-  }, 1500);
 }
 
 function spawnUniverse() {
