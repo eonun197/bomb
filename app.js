@@ -19,6 +19,7 @@ const ABACUS = {
 let currentTarget = TARGETS[0];
 let serverHits = { school: 0, company: 0, exam: 0, monday: 0 };
 let pendingHits = { school: 0, company: 0, exam: 0, monday: 0 };
+let firstFetchDone = false;
 
 /* ── 서버 통신 ── */
 async function fetchServer() {
@@ -32,6 +33,7 @@ async function fetchServer() {
       })
     );
     all.forEach(({ key, value }) => { serverHits[key] = value; });
+    firstFetchDone = true;
     refreshDisplay();
     refreshTotalHits();
   } catch (e) {
@@ -83,17 +85,26 @@ function getTotalClicks() {
 function refreshDisplay() {
   const el = document.getElementById("counter");
   if (!el) return;
+  const btn = document.getElementById("bomb-btn");
+  if (!firstFetchDone) {
+    el.textContent = "불러오는 중...";
+    el.classList.add("is-loading");
+    el.classList.remove("is-zero");
+    if (btn) btn.disabled = true;
+    return;
+  }
+  el.classList.remove("is-loading");
   const n = getDisplayCount();
   el.textContent = formatNum(n);
   el.classList.toggle("is-zero", n <= 0);
-  const btn = document.getElementById("bomb-btn");
   if (btn) btn.disabled = n <= 0;
   if (n <= 0) triggerBigBang();
 }
 
 function refreshTotalHits() {
   const el = document.getElementById("total-hits");
-  if (el) el.textContent = formatNum(getTotalClicks());
+  if (!el) return;
+  el.textContent = firstFetchDone ? formatNum(getTotalClicks()) : "...";
 }
 
 function renderTarget() {

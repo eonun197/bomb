@@ -141,6 +141,17 @@ html, body {
   color: #6a3a3a;
   text-shadow: none;
 }
+.counter.is-loading {
+  font-size: clamp(1.1rem, 2.6vw, 1.8rem);
+  color: rgba(255, 200, 170, 0.55);
+  text-shadow: 0 0 14px rgba(255, 100, 40, 0.35);
+  letter-spacing: 0.08em;
+  animation: loadingPulse 1.4s ease-in-out infinite;
+}
+@keyframes loadingPulse {
+  0%, 100% { opacity: 0.55; }
+  50%      { opacity: 1; }
+}
 
 /* ── 폭탄 버튼 (영롱한 빨강-주황) ── */
 .bomb-btn {
