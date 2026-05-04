@@ -31,7 +31,17 @@ html, body {
   inset: 0;
   z-index: 1;
   pointer-events: none;
-  overflow: hidden;
+}
+.starfield.is-universe {
+  animation: universeFloat 90s ease-in-out infinite;
+  will-change: transform;
+}
+@keyframes universeFloat {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  20%      { transform: translate3d(-32px, 22px, 0); }
+  40%      { transform: translate3d(28px, -24px, 0); }
+  60%      { transform: translate3d(22px, 30px, 0); }
+  80%      { transform: translate3d(-24px, -18px, 0); }
 }
 
 /* ── 상단 타이틀 + 대상 선택 ── */

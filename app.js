@@ -272,12 +272,44 @@ function spawnUniverse() {
   const sf = document.getElementById("starfield");
   if (!sf) return;
   sf.innerHTML = "";
-  const colors = ["#ffffff", "#ffeebb", "#bbeeff", "#ffccaa", "#aaccff", "#ffe9d4"];
+  sf.classList.add("is-universe");
+
+  const colors = [
+    "#ffffff", "#ffffff", "#ffffff",   // 흰색 다수
+    "#ffeebb", "#ffe9d4", "#ffddaa",   // 따뜻한 황백
+    "#bbeeff", "#aaccff", "#cce0ff",   // 차가운 청백
+    "#ffccaa",                          // 옅은 살구
+  ];
   const W = window.innerWidth;
   const H = window.innerHeight;
-  for (let i = 0; i < 320; i++) {
-    settleAsStar(Math.random() * W, Math.random() * H, colors[i % colors.length]);
+  const padW = 100, padH = 100;
+  const total = 2400;
+
+  const frag = document.createDocumentFragment();
+  for (let i = 0; i < total; i++) {
+    const x = -padW + Math.random() * (W + padW * 2);
+    const y = -padH + Math.random() * (H + padH * 2);
+    const r = Math.random();
+    let size;
+    if      (r < 0.78) size = 0.6 + Math.random() * 1.2;   // 78%: 매우 작음 (먼 별)
+    else if (r < 0.95) size = 1.6 + Math.random() * 1.4;   // 17%: 중간
+    else if (r < 0.995) size = 2.8 + Math.random() * 2;    // 4.5%: 밝음
+    else               size = 4.5 + Math.random() * 3;     // 0.5%: 매우 밝음 (앵커)
+
+    const star = document.createElement("div");
+    star.className = "star";
+    star.style.left = x + "px";
+    star.style.top = y + "px";
+    star.style.color = colors[(Math.random() * colors.length) | 0];
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+    star.style.marginLeft = (-size / 2) + "px";
+    star.style.marginTop = (-size / 2) + "px";
+    star.style.setProperty("--tw-dur", (3 + Math.random() * 5).toFixed(1) + "s");
+    star.style.setProperty("--tw-delay", (Math.random() * 6).toFixed(1) + "s");
+    frag.appendChild(star);
   }
+  sf.appendChild(frag);
 }
 
 /* ── 초기화 ── */
