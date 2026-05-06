@@ -1,4 +1,4 @@
- name: Daily Counter Reset                                                     
+name: Daily Counter Reset                                                     
   on:
     schedule:                                                                   
       - cron: '0 15 * * *'                                  
