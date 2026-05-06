@@ -253,10 +253,18 @@ html, body {
   letter-spacing: 0.02em;
   font-weight: 500;
 }
-.participants #participant-count {
+.participants #participant-count,
+.participants #total-hits {
   color: #ff9b48;
   font-weight: 800;
   text-shadow: 0 0 12px rgba(255, 130, 50, 0.6);
+}
+.reset-note {
+  font-size: 0.78rem;
+  color: rgba(255, 200, 170, 0.4);
+  letter-spacing: 0.05em;
+  margin-top: -0.6rem;
+  font-weight: 400;
 }
 
 /* ── 스파크 (점, 사라지면서 별로 정착) ── */
