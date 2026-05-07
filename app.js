@@ -11,22 +11,50 @@ const INITIAL = 100000000000;             // 천억
 const ABACUS_NS = "eonun197-bomb-hits";
 const POLL_MS = 3000;
 
+// 카운터 키는 매일 새로 만들어진다 → 자정(KST)에 자동 리셋 효과
+function todayKST() {
+  const kstMs = Date.now() + 9 * 60 * 60 * 1000;
+  const d = new Date(kstMs);
+  return `${d.getUTCFullYear()}${String(d.getUTCMonth() + 1).padStart(2, "0")}${String(d.getUTCDate()).padStart(2, "0")}`;
+}
+function dateKey(targetKey) {
+  return `${targetKey}-${todayKST()}`;
+}
+
 const ABACUS = {
-  get: (k) => `https://abacus.jasoncameron.dev/get/${ABACUS_NS}/${k}`,
-  hit: (k) => `https://abacus.jasoncameron.dev/hit/${ABACUS_NS}/${k}`,
+  get: (k) => `https://abacus.jasoncameron.dev/get/${ABACUS_NS}/${dateKey(k)}`,
+  hit: (k) => `https://abacus.jasoncameron.dev/hit/${ABACUS_NS}/${dateKey(k)}`,
 };
 
 let currentTarget = TARGETS[0];
 let serverHits = { school: 0, company: 0, exam: 0, monday: 0 };
 let pendingHits = { school: 0, company: 0, exam: 0, monday: 0 };
 let firstFetchDone = false;
+let currentDate = todayKST();
 
 /* ── 서버 통신 ── */
 async function fetchServer() {
+  // 자정 넘었으면 화면 상태 리셋 (새 날의 카운터로 시작)
+  const date = todayKST();
+  if (date !== currentDate) {
+    currentDate = date;
+    serverHits = { school: 0, company: 0, exam: 0, monday: 0 };
+    pendingHits = { school: 0, company: 0, exam: 0, monday: 0 };
+    bigBangFired = false;
+    document.body.classList.remove("bigbang");
+    document.querySelectorAll(".bigbang-flash, .bigbang-msg").forEach((e) => e.remove());
+    const sf = document.getElementById("starfield");
+    if (sf) {
+      sf.innerHTML = "";
+      sf.classList.remove("is-universe");
+    }
+  }
+
   try {
     const all = await Promise.all(
       Object.values(TARGET_KEYS).map(async (k) => {
         const res = await fetch(ABACUS.get(k), { cache: "no-store" });
+        if (res.status === 404) return { key: k, value: 0 };  // 오늘 첫 클릭 전: 카운터 미생성
         if (!res.ok) throw new Error(k + " HTTP " + res.status);
         const d = await res.json();
         return { key: k, value: typeof d.value === "number" ? d.value : 0 };
