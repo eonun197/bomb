@@ -7,7 +7,7 @@
 
 const TARGETS = ["학교", "회사", "시험", "월요일"];
 const TARGET_KEYS = { "학교": "school", "회사": "company", "시험": "exam", "월요일": "monday" };
-const INITIAL = 100000000000;             // 천억
+const INITIAL = 10000;                    // 1만
 const ABACUS_NS = "eonun197-bomb-hits";
 const POLL_MS = 3000;
 
